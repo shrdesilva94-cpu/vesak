@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vesak Card Designer - powered by Hashan R de silva</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1f0d22, #0d0413);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: row;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            gap: 20px;
+            max-width: 1100px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* වෙසක් කාඩ් පතේ ප්‍රධාන කොටස */
+        .card-wrapper {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .vesak-card {
+            width: 100%;
+            max-width: 650px;
+            aspect-ratio: 3 / 2;
+            background-color: #edd6b1; /* පැරණි කඩදාසි පැහැය */
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            overflow: hidden;
+            border: 8px solid #cca671;
+            color: #2b1b04;
+            transition: all 0.5s ease;
+        }
+
+        /* ඩිසයින් වෙනස් වන විට පසුබිම් මාරු වීම */
+        .design-1 { background: radial-gradient(circle at 30% 30%, #fff7c2, #edd6b1 70%); }
+        .design-2 { background: linear-gradient(to bottom, #11011e, #310842, #edd6b1); color: #fff; }
+        .design-3 { background: radial-gradient(circle, #fcf6e8, #cca671); }
+
+        /* ඇනිමේෂන් වන තරු */
+        .star {
+            position: absolute;
+            color: #ffcc00;
+            font-size: 14px;
+            animation: blink 2s infinite alternate;
+        }
+        @keyframes blink {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); text-shadow: 0 0 10px #ffea00; }
+        }
+
+        /* වෙසක් කූඩුව සහ හඳ */
+        .moon-lantern-container {
+            position: absolute;
+            left: 5%;
+            top: 5%;
+            width: 45%;
+            height: 90%;
+        }
+
+        .moon {
+            width: 120px;
+            height: 120px;
+            background: #ffdb4d;
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            box-shadow: 0 0 30px #ffdb4d;
+        }
+
+        .lantern {
+            font-size: 80px;
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            animation: swing 3s infinite ease-in-out alternate;
+            transform-origin: top center;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+        }
+        @keyframes swing {
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(5deg); }
+        }
+
+        /* නිවී නිවී පෙනෙන ලස්සන ලයිට් ඉෆෙක්ට් */
+        .glow-sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff;
+            animation: float-sparkle 4s infinite linear;
+        }
+        @keyframes float-sparkle {
+            0% { transform: translateY(100px) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-50px) scale(1.2); opacity: 0; }
+        }
+
+        /* කවි සහ අකුරු ඇති කොටස */
+        .card-content {
+            position: absolute;
+            right: 5%;
+            top: 8%;
+            width: 50%;
+            text-align: right;
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #610303;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .design-2 .main-title { color: #ffeb3b; }
+
+        .poem {
+            font-size: 14px;
+            line-height: 1.6;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: left;
+            display: inline-block;
+        }
+
+        /* විසින් සහ වෙත ලයිව් අප්ඩේට් වන කොටස */
+        .names-display {
+            margin-top: 15px;
+            text-align: right;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .line-item {
+            margin: 8px 0;
+        }
+
+        .dotted-line {
+            border-bottom: 2px dotted #555;
+            display: inline-block;
+            min-width: 150px;
+            color: #800000;
+            padding: 0 5px;
+            text-align: center;
+        }
+        .design-2 .dotted-line { border-color: #fff; color: #ffeb3b; }
+
+        /* පාලක පැනලය (Side Panel) */
+        .controls-panel {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .controls-panel h3 {
+            margin-top: 0;
+            color: #ffcc00;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 8px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-group label {
+            font-size: 13px;
+            color: #ccc;
+        }
+
+        .input-group input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #555;
+            background: #1f122b;
+            color: white;
+            outline: none;
+        }
+
+        /* ඩිසයින් තේරීමේ බොත්තම් */
+        .design-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .design-thumb {
+            border: 2px solid #555;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 12px;
+            background: rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+
+        .design-thumb:hover, .design-thumb.active {
+            border-color: #ffcc00;
+            background: rgba(255, 204, 0, 0.2);
+        }
+
+        /* යැවීමේ බොත්තම් */
+        .action-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-send { background: #25D366; color: white; }
+        .btn-send:hover { background: #1ebd58; }
+
+        /* ෆුටර් එක (Copyright) */
+        .footer-credit {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aaa;
+            letter-spacing: 1px;
+        }
+        
+        .card-footer {
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 15px;
+            font-size: 10px;
+            color: rgba(0,0,0,0.5);
+        }
+        .design-2 .card-footer { color: rgba(255,255,255,0.5); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .app-container { flex-direction: column; }
+            .vesak-card { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    
+    <div class="card-wrapper">
+        <div class="vesak-card design-1" id="vesakCard">
+            
+            <div class="star" style="top:10%; left:15%;">★</div>
+            <div class="star" style="top:25%; left:45%;">✦</div>
+            <div class="star" style="top:40%; left:10%;">★</div>
+            <div class="star" style="top:15%; left:60%;">✦</div>
+            <div class="star" style="top:70%; left:50%;">★</div>
+            
+            <div class="glow-sparkle" style="left:20%; animation-delay: 0s;"></div>
+            <div class="glow-sparkle" style="left:35%; animation-delay: 1.5s;"></div>
+            <div class="glow-sparkle" style="left:50%; animation-delay: 0.7s;"></div>
+
+            <div class="moon-lantern-container">
+                <div class="moon" id="cardMoon"></div>
+                <div class="lantern">🏮</div>
+            </div>
+
+            <div class="card-content">
+                <div class="main-title">පින්බර වෙසක් මංගල්‍යයක් වේවා!</div>
+                
+                <div class="poem">
+                    වැනුවා නම් බුදු ගුණ වැනුවාමය<br>
+                    තැනුවා නම් නම සිත තැනුවාමය<br>
+                    දෙනුවා නම් දන් පින් දෙනුවාමය<br>
+                    දිනුවා නම් පරලොව දිනුවාමය<br>
+                    <small style="display:block; text-align:right; margin-top:5px; font-size:10px; opacity:0.7;">-ලෝවැඩ සඟරාව-</small>
+                </div>
+
+                <div class="names-display">
+                    <div class="line-item">
+                        <span class="dotted-line" id="viewVisin">...........................</span> විසින්
+                    </div>
+                    <div class="line-item">
+                        <span class="dotted-line" id="viewVetha">...........................</span> වෙත
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <span>🌸 හෙළකුරු වෙනින්</span>
+                <span>powered by Hashan R de silva</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls-panel">
+        <h3>Card Designer Panel</h3>
+        
+        <div class="input-group">
+            <label for="inputVisin">විසින් (ඔබේ නම):</label>
+            <input type="text" id="inputVisin" placeholder="හශාන්" oninput="updateCard()">
+        </div>
+
+        <div class="input-group">
+            <label for="inputVetha">වෙත (ලැබෙන්නාගේ නම):</label>
+            <input type="text" id="inputVetha" placeholder="අම්මා" oninput="updateCard()">
+        </div>
+
+        <div class="input-group">
+            <label>තීම් ඩිසයින් එක තෝරන්න (3 Designs):</label>
+            <div class="design-selector">
+                <div class="design-thumb active" onclick="changeDesign(1, this)">🟡 Classic Gold</div>
+                <div class="design-thumb" onclick="changeDesign(2, this)">🔮 Night Glow</div>
+                <div class="design-thumb" onclick="changeDesign(3, this)">🌅 Vintage</div>
+            </div>
+        </div>
+
+        <div class="action-btns">
+            <button class="btn btn-send" onclick="sendWhatsApp()">WhatsApp හරහා යවන්න 💬</button>
+        </div>
+    </div>
+</div>
+
+<div class="footer-credit">
+    powered by <strong>Hashan R de silva</strong>
+</div>
+
+<script>
+    // URL එකෙන් දත්ත කියවීම (යමෙකුට ලැබුණු පසු බැලීමට)
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const visin = urlParams.get('vsin');
+        const vetha = urlParams.get('vtha');
+        const design = urlParams.get('dsn') || 1;
+
+        if (visin || vetha) {
+            document.getElementById('viewVisin').innerText = visin ? decodeURIComponent(visin) : ".................";
+            document.getElementById('viewVetha').innerText = vetha ? decodeURIComponent(vetha) : ".................";
+            
+            // ඉන්පුට් වලටත් අගයන් එකතු කිරීම
+            document.getElementById('inputVisin').value = visin ? decodeURIComponent(visin) : "";
+            document.getElementById('inputVetha').value = vetha ? decodeURIComponent(vetha) : "";
+            
+            // සුදුසු ඩිසයින් එක ඇප්ලයි කිරීම
+            const thumbs = document.querySelectorAll('.design-thumb');
+            changeDesign(parseInt(design), thumbs[design-1]);
+        }
+    }
+
+    // Input කරන විට කාඩ්පතේ අකුරු Real-time වෙනස් වීම
+    function updateCard() {
+        const visinVal = document.getElementById('inputVisin').value.trim();
+        const vethaVal = document.getElementById('inputVetha').value.trim();
+
+        document.getElementById('viewVisin').innerText = visinVal !== "" ? visinVal : "...........................";
+        document.getElementById('viewVetha').innerText = vethaVal !== "" ? vethaVal : "...........................";
+    }
+
+    // ඩිසයින් 3 මාරු කිරීමේ Function එක
+    let currentDesign = 1;
+    function changeDesign(designNumber, element) {
+        currentDesign = designNumber;
+        const card = document.getElementById('vesakCard');
+        const moon = document.getElementById('cardMoon');
+        
+        // පැරණි ක්ලාස් ඉවත් කිරීම
+        card.classList.remove('design-1', 'design-2', 'design-3');
+        card.classList.add('design-' + designNumber);
+
+        // හඳෙහි වර්ණ ඩිසයින් එක අනුව වෙනස් කිරීම
+        if(designNumber === 2) {
+            moon.style.background = "#fff";
+            moon.style.boxShadow = "0 0 40px #fff";
+        } else {
+            moon.style.background = "#ffdb4d";
+            moon.style.boxShadow = "0 0 30px #ffdb4d";
+        }
+
+        // Active බොත්තම වෙනස් කිරීම
+        document.querySelectorAll('.design-thumb').forEach(thumb => thumb.classList.remove('active'));
+        element.classList.add('active');
+    }
+
+    // WhatsApp මඟින් යැවීම සඳහා ලින්ක් එක සැකසීම
+    function sendWhatsApp() {
+        const visinVal = document.getElementById('inputVisin').value.trim();
+        const vethaVal = document.getElementById('inputVetha').value.trim();
+
+        if (visinVal === "" || vethaVal === "") {
+            alert("කරුණාකර 'විසින්' සහ 'වෙත' යන ක්ෂේත්‍ර දෙකම පුරවන්න.");
+            return;
+        }
+
+        // වත්මන් URL එක ලබාගෙන Parameters එකතු කිරීම
+        const baseUrl = window.location.href.split('?')[0];
+        const shareUrl = `${baseUrl}?vsin=${encodeURIComponent(visinVal)}&vtha=${encodeURIComponent(vethaVal)}&dsn=${currentDesign}`;
+
+        // WhatsApp පණිවිඩය සැකසීම
+        const message = `🏮 *පින්බර වෙසක් මංගල්‍යයක් වේවා!* 🏮\n\n_${visinVal}_ විසින් _${vethaVal}_ වෙත එවූ අලංකාර සජීවී වෙසක් සුබපැතුම් පත නැරඹීමට පහත ලින්ක් එක ක්ලික් කරන්න:\n👉 ${shareUrl}`;
+        
+        window.open("https://wa.me/?text=" + encodeURIComponent(message), '_blank');
+    }
+</script>
+
+</body>
+</html>
