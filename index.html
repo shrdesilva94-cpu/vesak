@@ -47,7 +47,6 @@
             width: 100%;
             max-width: 650px;
             aspect-ratio: 3 / 2;
-            background-color: #edd6b1; /* පැරණි කඩදාසි පැහැය */
             border-radius: 8px;
             position: relative;
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
@@ -55,12 +54,23 @@
             border: 8px solid #cca671;
             color: #2b1b04;
             transition: all 0.5s ease;
+            background-size: cover;
+            background-position: center;
         }
 
-        /* ඩිසයින් වෙනස් වන විට පසුබිම් මාරු වීම */
-        .design-1 { background: radial-gradient(circle at 30% 30%, #fff7c2, #edd6b1 70%); }
-        .design-2 { background: linear-gradient(to bottom, #11011e, #310842, #edd6b1); color: #fff; }
-        .design-3 { background: radial-gradient(circle, #fcf6e8, #cca671); }
+        /* ඩිසයින් 3 සඳහා වෙන වෙනම බුදු පිළිම/පින්තූර පසුබිම් (Unsplash හරහා නිදහස් පින්තූර භාවිත කර ඇත) */
+        .design-1 { 
+            background-image: linear-gradient(to right, rgba(237, 214, 177, 0.85), rgba(237, 214, 177, 0.4)), url('https://images.unsplash.com/photo-1609137144813-2dbe487640cd?q=80&w=650&auto=format&fit=crop'); 
+        }
+        .design-2 { 
+            background-image: linear-gradient(to right, rgba(17, 1, 30, 0.9), rgba(17, 1, 30, 0.5)), url('https://images.unsplash.com/photo-1542384557-0824d90731ee?q=80&w=650&auto=format&fit=crop'); 
+            color: #fff;
+            border-color: #4a154b;
+        }
+        .design-3 { 
+            background-image: linear-gradient(to right, rgba(252, 246, 232, 0.9), rgba(204, 166, 113, 0.6)), url('https://images.unsplash.com/photo-1590075865003-e48277adc558?q=80&w=650&auto=format&fit=crop'); 
+            border-color: #8b5a2b;
+        }
 
         /* ඇනිමේෂන් වන තරු */
         .star {
@@ -81,24 +91,26 @@
             top: 5%;
             width: 45%;
             height: 90%;
+            z-index: 1;
         }
 
         .moon {
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             background: #ffdb4d;
             border-radius: 50%;
             position: absolute;
-            top: 10px;
-            left: 20px;
+            top: 15px;
+            left: 15px;
             box-shadow: 0 0 30px #ffdb4d;
+            transition: all 0.5s ease;
         }
 
         .lantern {
-            font-size: 80px;
+            font-size: 75px;
             position: absolute;
-            top: 40px;
-            left: 40px;
+            top: 45px;
+            left: 30px;
             animation: swing 3s infinite ease-in-out alternate;
             transform-origin: top center;
             filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
@@ -129,42 +141,48 @@
             position: absolute;
             right: 5%;
             top: 8%;
-            width: 50%;
+            width: 55%;
             text-align: right;
+            z-index: 2;
         }
 
         .main-title {
-            font-size: 24px;
+            font-size: 23px;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: #610303;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
-        .design-2 .main-title { color: #ffeb3b; }
+        .design-2 .main-title { color: #ffeb3b; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
 
         .poem {
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.6;
-            font-weight: 600;
-            margin-bottom: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
             text-align: left;
             display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 10px;
+            backdrop-filter: blur(2px);
         }
+        .design-2 .poem { background: rgba(0, 0, 0, 0.4); }
 
         /* විසින් සහ වෙත ලයිව් අප්ඩේට් වන කොටස */
         .names-display {
-            margin-top: 15px;
+            margin-top: 10px;
             text-align: right;
             font-size: 16px;
             font-weight: bold;
         }
 
         .line-item {
-            margin: 8px 0;
+            margin: 6px 0;
         }
 
         .dotted-line {
-            border-bottom: 2px dotted #555;
+            border-bottom: 2px dotted #2b1b04;
             display: inline-block;
             min-width: 150px;
             color: #800000;
@@ -225,7 +243,7 @@
             border-radius: 8px;
             cursor: pointer;
             text-align: center;
-            font-size: 12px;
+            font-size: 11px;
             background: rgba(255,255,255,0.05);
             transition: 0.3s;
         }
@@ -266,14 +284,13 @@
         .card-footer {
             position: absolute;
             bottom: 8px;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 15px;
-            font-size: 10px;
-            color: rgba(0,0,0,0.5);
+            right: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            color: rgba(0,0,0,0.6);
+            z-index: 2;
         }
-        .design-2 .card-footer { color: rgba(255,255,255,0.5); }
+        .design-2 .card-footer { color: rgba(255,255,255,0.6); }
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -292,12 +309,12 @@
             <div class="star" style="top:10%; left:15%;">★</div>
             <div class="star" style="top:25%; left:45%;">✦</div>
             <div class="star" style="top:40%; left:10%;">★</div>
-            <div class="star" style="top:15%; left:60%;">✦</div>
-            <div class="star" style="top:70%; left:50%;">★</div>
+            <div class="star" style="top:15%; left:35%;">✦</div>
+            <div class="star" style="top:70%; left:40%;">★</div>
             
-            <div class="glow-sparkle" style="left:20%; animation-delay: 0s;"></div>
-            <div class="glow-sparkle" style="left:35%; animation-delay: 1.5s;"></div>
-            <div class="glow-sparkle" style="left:50%; animation-delay: 0.7s;"></div>
+            <div class="glow-sparkle" style="left:15%; animation-delay: 0s;"></div>
+            <div class="glow-sparkle" style="left:30%; animation-delay: 1.5s;"></div>
+            <div class="glow-sparkle" style="left:45%; animation-delay: 0.7s;"></div>
 
             <div class="moon-lantern-container">
                 <div class="moon" id="cardMoon"></div>
@@ -305,14 +322,14 @@
             </div>
 
             <div class="card-content">
-                <div class="main-title">පින්බර වෙසක් මංගල්‍යයක් වේවා!</div>
+                <div class="main-title">පินබර වෙසක් මංගල්‍යයක් වේවා!</div>
                 
                 <div class="poem">
                     වැනුවා නම් බුදු ගුණ වැනුවාමය<br>
                     තැනුවා නම් නම සිත තැනුවාමය<br>
                     දෙනුවා නම් දන් පින් දෙනුවාමය<br>
                     දිනුවා නම් පරලොව දිනුවාමය<br>
-                    <small style="display:block; text-align:right; margin-top:5px; font-size:10px; opacity:0.7;">-ලෝවැඩ සඟරාව-</small>
+                    <small style="display:block; text-align:right; margin-top:3px; font-size:10px; opacity:0.8;">-ලෝවැඩ සඟරාව-</small>
                 </div>
 
                 <div class="names-display">
@@ -326,7 +343,6 @@
             </div>
 
             <div class="card-footer">
-                <span>🌸 හෙළකුරු වෙනින්</span>
                 <span>powered by Hashan R de silva</span>
             </div>
         </div>
@@ -346,11 +362,11 @@
         </div>
 
         <div class="input-group">
-            <label>තීම් ඩිසයින් එක තෝරන්න (3 Designs):</label>
+            <label>තීම් ඩිසයින් එක තෝරන්න (බුද්ධ ප්‍රතිමා 3ක් සමඟ):</label>
             <div class="design-selector">
-                <div class="design-thumb active" onclick="changeDesign(1, this)">🟡 Classic Gold</div>
-                <div class="design-thumb" onclick="changeDesign(2, this)">🔮 Night Glow</div>
-                <div class="design-thumb" onclick="changeDesign(3, this)">🌅 Vintage</div>
+                <div class="design-thumb active" onclick="changeDesign(1, this)">🟡 Samadhi Buddha</div>
+                <div class="design-thumb" onclick="changeDesign(2, this)">🔮 Neon Statue</div>
+                <div class="design-thumb" onclick="changeDesign(3, this)">🌅 Golden Buddha</div>
             </div>
         </div>
 
@@ -365,7 +381,7 @@
 </div>
 
 <script>
-    // URL එකෙන් දත්ත කියවීම (යමෙකුට ලැබුණු පසු බැලීමට)
+    // URL එකෙන් දත්ත කියවීම
     window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);
         const visin = urlParams.get('vsin');
@@ -376,11 +392,9 @@
             document.getElementById('viewVisin').innerText = visin ? decodeURIComponent(visin) : ".................";
             document.getElementById('viewVetha').innerText = vetha ? decodeURIComponent(vetha) : ".................";
             
-            // ඉන්පුට් වලටත් අගයන් එකතු කිරීම
             document.getElementById('inputVisin').value = visin ? decodeURIComponent(visin) : "";
             document.getElementById('inputVetha').value = vetha ? decodeURIComponent(vetha) : "";
             
-            // සුදුසු ඩිසයින් එක ඇප්ලයි කිරීම
             const thumbs = document.querySelectorAll('.design-thumb');
             changeDesign(parseInt(design), thumbs[design-1]);
         }
@@ -402,25 +416,26 @@
         const card = document.getElementById('vesakCard');
         const moon = document.getElementById('cardMoon');
         
-        // පැරණි ක්ලාස් ඉවත් කිරීම
         card.classList.remove('design-1', 'design-2', 'design-3');
         card.classList.add('design-' + designNumber);
 
-        // හඳෙහි වර්ණ ඩිසයින් එක අනුව වෙනස් කිරීම
+        // හඳ සහ ආලෝක තත්ත්වයන් වෙනස් කිරීම
         if(designNumber === 2) {
-            moon.style.background = "#fff";
+            moon.style.background = "rgba(255, 255, 255, 0.8)";
             moon.style.boxShadow = "0 0 40px #fff";
+        } else if(designNumber === 3) {
+            moon.style.background = "#ffea00";
+            moon.style.boxShadow = "0 0 35px #ffea00";
         } else {
             moon.style.background = "#ffdb4d";
             moon.style.boxShadow = "0 0 30px #ffdb4d";
         }
 
-        // Active බොත්තම වෙනස් කිරීම
         document.querySelectorAll('.design-thumb').forEach(thumb => thumb.classList.remove('active'));
         element.classList.add('active');
     }
 
-    // WhatsApp මඟින් යැවීම සඳහා ලින්ක් එක සැකසීම
+    // WhatsApp මඟින් යැවීම
     function sendWhatsApp() {
         const visinVal = document.getElementById('inputVisin').value.trim();
         const vethaVal = document.getElementById('inputVetha').value.trim();
@@ -430,11 +445,9 @@
             return;
         }
 
-        // වත්මන් URL එක ලබාගෙන Parameters එකතු කිරීම
         const baseUrl = window.location.href.split('?')[0];
         const shareUrl = `${baseUrl}?vsin=${encodeURIComponent(visinVal)}&vtha=${encodeURIComponent(vethaVal)}&dsn=${currentDesign}`;
 
-        // WhatsApp පණිවිඩය සැකසීම
         const message = `🏮 *පින්බර වෙසක් මංගල්‍යයක් වේවා!* 🏮\n\n_${visinVal}_ විසින් _${vethaVal}_ වෙත එවූ අලංකාර සජීවී වෙසක් සුබපැතුම් පත නැරඹීමට පහත ලින්ක් එක ක්ලික් කරන්න:\n👉 ${shareUrl}`;
         
         window.open("https://wa.me/?text=" + encodeURIComponent(message), '_blank');
